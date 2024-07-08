@@ -1,0 +1,14 @@
+/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab2_1_AIP/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.GeneratedMSBuildEditorConfig.editorconfig
+/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab2_1_AIP/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.AssemblyInfoInputs.cache
+/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab2_1_AIP/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.AssemblyInfo.cs
+/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab2_1_AIP/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.csproj.CoreCompileInputs.cache
+/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab2_1_AIP/ConsoleApp1/bin/Debug/net8.0/ConsoleApp1
+/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab2_1_AIP/ConsoleApp1/bin/Debug/net8.0/ConsoleApp1.deps.json
+/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab2_1_AIP/ConsoleApp1/bin/Debug/net8.0/ConsoleApp1.runtimeconfig.json
+/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab2_1_AIP/ConsoleApp1/bin/Debug/net8.0/ConsoleApp1.dll
+/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab2_1_AIP/ConsoleApp1/bin/Debug/net8.0/ConsoleApp1.pdb
+/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab2_1_AIP/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.dll
+/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab2_1_AIP/ConsoleApp1/obj/Debug/net8.0/refint/ConsoleApp1.dll
+/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab2_1_AIP/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.pdb
+/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab2_1_AIP/ConsoleApp1/obj/Debug/net8.0/ConsoleApp1.genruntimeconfig.cache
+/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab2_1_AIP/ConsoleApp1/obj/Debug/net8.0/ref/ConsoleApp1.dll
