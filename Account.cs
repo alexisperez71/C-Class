@@ -103,8 +103,16 @@ namespace ConsoleApp1
 
         public bool SetAccountNumber(int inAccountNumber)
         {
-            _accountNumber = inAccountNumber;
-            return true;
+            if (inAccountNumber < 0)
+            {
+                return false;
+            }
+            else
+            {
+                _accountNumber = inAccountNumber;
+                return true;
+            }
+
         }
 
         public int GetAccountNumber()

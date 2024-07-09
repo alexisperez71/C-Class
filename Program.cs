@@ -13,6 +13,7 @@ public class Program
         int userInput;
         string name;
         string address;
+        string status;
         Account.AccountState accountStatus;
 
         // These variables are used for checks in my while loops below.
@@ -88,8 +89,15 @@ public class Program
             try
             {
                 var accountNumber = Convert.ToInt32(Console.ReadLine());
-                bankProgram.SetAccountNumber(accountNumber);
-                validAccountNumber = true;
+                if (bankProgram.SetAccountNumber(accountNumber))
+                {
+                    validAccountNumber = true;
+                }
+                else
+                {
+                    Console.WriteLine("Error! Account Number must be a positive number!");
+                }
+                
             }
             catch (System.FormatException)
             {
@@ -101,9 +109,9 @@ public class Program
         {
             Console.WriteLine("Enter the state of the account from the options below: ");
             Console.WriteLine("- New \n- Active \n- Under Audit \n- Frozen \n- Closed");
-            var Status = Console.ReadLine();
+            status = Console.ReadLine().Replace(" ", string.Empty);
 
-            if (!int.TryParse(Status, out _) && Enum.TryParse(Status, out accountStatus))
+            if (!int.TryParse(status, out _) && Enum.TryParse(status, out accountStatus))
             {
                 Console.WriteLine($"Success! Your account status has been set as : {accountStatus}");
                 bankProgram.SetAccountState(accountStatus);
@@ -152,6 +160,7 @@ public class Program
                         if (bankProgram.SetName(name))
                         {
                             validName = true;
+                            Console.WriteLine($"{dashes} \nSuccess! The new name on the account is {bankProgram.GetName()}");
                         }
                         else
                         {
@@ -166,23 +175,24 @@ public class Program
                     validAddress = false;
                     while (validAddress is false)
                     {
-                        Console.WriteLine("Enter your new address:");
+                        Console.WriteLine($"{dashes} \nEnter your new address:");
                         address = Console.ReadLine();
                         if (bankProgram.SetAddress(address))
                         {
                             validAddress = true;
+                            Console.WriteLine($"{dashes} \nSuccess! Your new address is: {bankProgram.GetAddress()}");
                         }
                         else
                         {
-                            Console.WriteLine("Error! Address cannot be blank!");
+                            Console.WriteLine($"{dashes} \nError! Address cannot be blank!");
                         }
                     }
                     break;
                 case 4:
-                    bankProgram.GetAddress();
+                    Console.WriteLine($"{dashes} \nYour address is: {bankProgram.GetAddress()}");
                     break;
                 case 5:
-                    Console.WriteLine($"Your balance is ${bankProgram.GetBalance()}");
+                    Console.WriteLine($"{dashes} \nYour balance is ${bankProgram.GetBalance()}");
                     break;
                 case 6:
                     while (validWithdrawal is false)
@@ -193,17 +203,17 @@ public class Program
                             var withdrawalAmount = Convert.ToDecimal(Console.ReadLine());
                             if (bankProgram.WithdrawFunds(withdrawalAmount))
                             {
-                                Console.WriteLine($"Success! You have withdrawn: ${withdrawalAmount} \nYour account balance is now ${bankProgram.GetBalance()}");
+                                Console.WriteLine($"{dashes} \nSuccess! You have withdrawn: ${withdrawalAmount} \nYour account balance is now ${bankProgram.GetBalance()}");
                                 validWithdrawal = true;
                             }
                             else
                             {
-                                Console.WriteLine("Error! Withdrawal must be a positive number and cannot exceed your current balance!");
+                                Console.WriteLine($"{dashes} \nError! Withdrawal must be a positive number and cannot exceed your current balance!");
                             }
                         }
                         catch (System.FormatException)
                         {
-                            Console.WriteLine("Error! Withdrawal amount must be a positive number!");
+                            Console.WriteLine($"{dashes} \nError! Withdrawal amount must be a positive number!");
                         }
 
                     }
@@ -211,24 +221,24 @@ public class Program
                 case 7:
                     while (validDeposit is false)
                     {
-                        Console.WriteLine("Enter your deposit amount: ");
+                        Console.WriteLine($"{dashes} \nEnter your deposit amount: ");
                         try
                         {
                             var depositAmount = Convert.ToDecimal(Console.ReadLine());
                             if (depositAmount > 0)
                             {
                                 bankProgram.PayInFunds(depositAmount);
-                                Console.WriteLine($"Success you have deposited: ${depositAmount} \nYour new account balance is ${bankProgram.GetBalance()}");
+                                Console.WriteLine($"{dashes} \nSuccess you have deposited: ${depositAmount} \nYour new account balance is ${bankProgram.GetBalance()}");
                                 validDeposit = true;
                             }
                             else
                             {
-                                Console.WriteLine("Deposit cannot be a negative number!");
+                                Console.WriteLine($"{dashes} \nDeposit cannot be a negative number!");
                             }
                         }
                         catch (System.FormatException)
                         {
-                            Console.WriteLine("Error! Deposit amount must be a positive number!");
+                            Console.WriteLine($"{dashes} \nError! Deposit amount must be a positive number!");
                         }
 
                     }
@@ -244,9 +254,9 @@ public class Program
                     {
                         Console.WriteLine("Enter the new state of you account, choose from the options below: ");
                         Console.WriteLine("- New \n- Active \n- Under Audit \n- Frozen \n- Closed");
-                        var Status = Console.ReadLine();
+                        status = Console.ReadLine().Replace(" ", string.Empty);
 
-                        if (!int.TryParse(Status, out _) && Enum.TryParse(Status, out accountStatus))
+                        if (!int.TryParse(status, out _) && Enum.TryParse(status, out accountStatus))
                         {
                             Console.WriteLine($"{dashes} \nSuccess! Your account status has been set as : {accountStatus}");
                             bankProgram.SetAccountState(accountStatus);
