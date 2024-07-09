@@ -10,13 +10,9 @@ public class Program
         var dashes = new string('-', 100);
         
         // These variables are used to store input from the console
+        int userInput;
         string name;
         string address;
-        decimal balance;
-        int userInput;
-        int accountNumber;
-        decimal withdrawalAmount;
-        decimal depositAmount;
         Account.AccountState accountStatus;
 
         // These variables are used for checks in my while loops below.
@@ -31,7 +27,7 @@ public class Program
         // Instantiate the Account class
         Account bankProgram = new Account();
         
-        // Starts the account creation proccess. The dashes variable is for formatting.
+        // Starts the account creation process. The dashes variable is for formatting.
         Console.WriteLine($"{dashes} \nWelcome To My Banking Program \n{dashes}");
         Console.WriteLine($"Lets Begin With Creating Your Account \n{dashes}");
         
@@ -68,7 +64,7 @@ public class Program
             Console.WriteLine("Set your balance:");
             try
             {
-                balance = Convert.ToDecimal(Console.ReadLine());
+                var balance = Convert.ToDecimal(Console.ReadLine());
                 if (bankProgram.SetBalance(balance))
                 {
                     validBalance = true;
@@ -91,7 +87,7 @@ public class Program
             Console.WriteLine("Enter your account number:");
             try
             {
-                accountNumber = Convert.ToInt32(Console.ReadLine());
+                var accountNumber = Convert.ToInt32(Console.ReadLine());
                 bankProgram.SetAccountNumber(accountNumber);
                 validAccountNumber = true;
             }
@@ -120,6 +116,9 @@ public class Program
         }
         
         Console.WriteLine($"{dashes}\nThank you! Your account has been created :)");
+        Console.WriteLine($"{dashes} \nAccount Details: \nName: {bankProgram.GetName()} \nAddress: {bankProgram.GetAddress()}");
+        Console.WriteLine($"Initial balance: {bankProgram.GetBalance()} \nAccount Number: {bankProgram.GetAccountNumber()}");
+        Console.WriteLine($"Account Status: {bankProgram.GetAccountState()}");
 
         do
         {
@@ -142,13 +141,13 @@ public class Program
             switch (userInput)
             {
                 case 0:
-                    Console.WriteLine("This program is now ending, Goodbye!");
+                    Console.WriteLine($"{dashes} \nThis program is now ending, Goodbye!");
                     break;
                 case 1:
                     validName = false;
                     while (validName is false)
                     {
-                        Console.WriteLine("Enter the new name of the account:");
+                        Console.WriteLine($"{dashes} \nEnter the new name of the account:");
                         name = Console.ReadLine();
                         if (bankProgram.SetName(name))
                         {
@@ -156,12 +155,12 @@ public class Program
                         }
                         else
                         {
-                            Console.WriteLine("Error! Please enter a name without any digits or special characters!");
+                            Console.WriteLine($"{dashes} \nError! Please enter a name without any digits or special characters!");
                         }
                     }
                     break;
                 case 2:
-                    bankProgram.GetName();
+                    Console.WriteLine($"{dashes} \nThe name of the account holder is: {bankProgram.GetName()}");
                     break;
                 case 3:
                     validAddress = false;
@@ -191,7 +190,7 @@ public class Program
                         try
                         {
                             Console.WriteLine("How much would you like to withdraw?");
-                            withdrawalAmount = Convert.ToDecimal(Console.ReadLine());
+                            var withdrawalAmount = Convert.ToDecimal(Console.ReadLine());
                             if (bankProgram.WithdrawFunds(withdrawalAmount))
                             {
                                 Console.WriteLine($"Success! You have withdrawn: ${withdrawalAmount} \nYour account balance is now ${bankProgram.GetBalance()}");
@@ -215,7 +214,7 @@ public class Program
                         Console.WriteLine("Enter your deposit amount: ");
                         try
                         {
-                            depositAmount = Convert.ToDecimal(Console.ReadLine());
+                            var depositAmount = Convert.ToDecimal(Console.ReadLine());
                             if (depositAmount > 0)
                             {
                                 bankProgram.PayInFunds(depositAmount);
@@ -234,14 +233,39 @@ public class Program
 
                     }
                     break;
+                    
+                case 8:
+                    Console.WriteLine($"{dashes} \nYour account status is: {bankProgram.GetAccountState()}");
+                    break;
+                
+                case 9:
+                    validAccountStatus = false;
+                    while (validAccountStatus is false)
+                    {
+                        Console.WriteLine("Enter the new state of you account, choose from the options below: ");
+                        Console.WriteLine("- New \n- Active \n- Under Audit \n- Frozen \n- Closed");
+                        var Status = Console.ReadLine();
+
+                        if (!int.TryParse(Status, out _) && Enum.TryParse(Status, out accountStatus))
+                        {
+                            Console.WriteLine($"{dashes} \nSuccess! Your account status has been set as : {accountStatus}");
+                            bankProgram.SetAccountState(accountStatus);
+                            validAccountStatus = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{dashes} \nError! The account status must be one of the options given!");
+                        }
+                    }
+
+                    break;
 
                 default:
-                    Console.WriteLine("Error! Please only enter a number from the menu!");
+                    Console.WriteLine($"{dashes} \nError! Please only enter a number from the menu!");
                     break;
             }
             
         } while (userInput != 0);
         
-
     }
 }
