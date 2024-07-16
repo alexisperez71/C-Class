@@ -14,7 +14,7 @@
 
 namespace ConsoleApp1
 {
-    class Account : IAccount
+    abstract class Account : IAccount
     {
         public enum AccountState
         {
@@ -23,16 +23,25 @@ namespace ConsoleApp1
             UnderAudit,
             Frozen,
             Closed
+        }
 
+        public enum AccountType
+        {
+            Null,
+            Checking,
+            Savings,
+            Cd
         }
 
         private string _name;
         private string _address;
-        private int _accountNumber;
+        protected string _accountNumber;
         private decimal _balance;
         private AccountState _state;
-        private const int MinBalance = 100;
-
+        protected int MinBalance;
+        protected int _serviceFee = 0;
+        protected int MinServiceFee = 0;
+        protected const int accountNumberLength = 8;
         private int _SomeNum;
 
         public string GetName()
@@ -41,7 +50,7 @@ namespace ConsoleApp1
         }
 
         public bool SetName(string inName)
-        {   
+        {
             if (string.IsNullOrEmpty(inName) || int.TryParse(inName, out _SomeNum))
             {
                 return false;
@@ -100,21 +109,16 @@ namespace ConsoleApp1
             return true;
         }
 
-        public bool SetAccountNumber(int inAccountNumber)
+        public virtual void GenAccountNumber()
         {
-            if (inAccountNumber < 0)
+            Random randomGen = new Random();
+            const string alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            for (int i = 0; i < accountNumberLength; i++)
             {
-                return false;
+                _accountNumber += randomGen.Next(alphaNumeric.Length);
             }
-            else
-            {
-                _accountNumber = inAccountNumber;
-                return true;
-            }
-
         }
-
-        public int GetAccountNumber()
+        public string GetAccountNumber()
         {
             return _accountNumber;
         }
@@ -128,5 +132,25 @@ namespace ConsoleApp1
         {
             _state = inState;
         }
+
+        public virtual bool SetServiceFee(int inServiceFee)
+        {
+            if (inServiceFee >= MinServiceFee)
+            {
+                _serviceFee = inServiceFee;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public int GetServiceFee()
+        {
+            return _serviceFee;
+        }
+
     }
-}    
+}
+

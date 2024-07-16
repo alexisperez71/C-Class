@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab2_1_AIP/ConsoleApp1/ConsoleApp1.csproj",
+      "projectUniqueName": "/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab3_1_AIP/ConsoleApp1/ConsoleApp1.csproj",
       "projectName": "ConsoleApp1",
-      "projectPath": "/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab2_1_AIP/ConsoleApp1/ConsoleApp1.csproj",
+      "projectPath": "/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab3_1_AIP/ConsoleApp1/ConsoleApp1.csproj",
       "packagesPath": "/Users/alexisperez/.nuget/packages/",
-      "outputPath": "/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab2_1_AIP/ConsoleApp1/obj/",
+      "outputPath": "/Users/alexisperez/Desktop/Summer2024/CS-3260/Labs/CS3260_Lab3_1_AIP/ConsoleApp1/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/alexisperez/.nuget/NuGet/NuGet.Config"

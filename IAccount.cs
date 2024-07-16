@@ -27,9 +27,13 @@ interface IAccount
 
     public bool SetBalance(decimal inBalance);
 
-    public bool SetAccountNumber(int inAccountNumber);
+    public void GenAccountNumber();
+    
+    public string GetAccountNumber();
 
-    public int GetAccountNumber();
+    public bool SetServiceFee(int inServiceFee);
+
+    public int GetServiceFee();
 
     Account.AccountState GetAccountState();
 

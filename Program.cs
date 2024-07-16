@@ -23,38 +23,57 @@ public class Program
         
         // These variables are used to store input from the console
         int userInput;
-        string name;
-        string address;
+        string name = "";
+        string address = "";
         string status;
-        Account.AccountState accountStatus;
+        decimal balance = 0;
+        Account.AccountState accountStatus = Account.AccountState.New;
+        Account.AccountType accountType = Account.AccountType.Null;
 
         // These variables are used for checks in my while loops below.
+        var validAccountType = false;
         var validName = false;
         var validAddress = false;
         var validBalance = false;
-        var validAccountNumber = false;
+        // var validAccountNumber = false;
         var validWithdrawal = false;
         var validDeposit = false;
         var validAccountStatus = false;
-
-        // Instantiate the Account class
-        Account bankProgram = new Account();
         
         // Starts the account creation process. The dashes variable is for formatting.
         Console.WriteLine($"{dashes} \nWelcome To My Banking Program \n{dashes}");
         Console.WriteLine($"Lets Begin With Creating Your Account \n{dashes}");
+
+        while (validAccountType is false)
+        {
+            string type;
+            Console.WriteLine("Enter the state of the account from the options below: ");
+            Console.WriteLine("- Checking \n- Savings \n- Cd");
+            type = Console.ReadLine().Replace(" ", string.Empty);
+            if (!int.TryParse(type, out _) && Enum.TryParse(type, out accountType))
+            {
+                Console.WriteLine(dashes);
+                Console.WriteLine($"Thank you! We will be creating a {accountType} account for you.");
+                validAccountType = true;
+            }
+            else
+            {
+                Console.WriteLine("Error! Please only enter an account type from the choices given!");
+            }
+            
+        }
         
         while (validName is false)
         {
             Console.WriteLine("Enter Your Name:");
             name = Console.ReadLine();
-            if (bankProgram.SetName(name))
+            if (string.IsNullOrEmpty(name) || int.TryParse(name, out _))
             {
-                validName = true;
+                Console.WriteLine("Error! Please enter a name without any digits or special characters!");
             }
             else
             {
-                Console.WriteLine("Error! Please enter a name without any digits or special characters!");
+                validName = true;    
             }
         }
 
@@ -62,13 +81,13 @@ public class Program
         {
             Console.WriteLine("Enter Your Address:");
             address = Console.ReadLine();
-            if (bankProgram.SetAddress(address))
+            if (string.IsNullOrEmpty((address)))
             {
-                validAddress = true;
+                Console.WriteLine("Error! Address cannot be blank!");
             }
             else
             {
-                Console.WriteLine("Error! Address cannot be blank!");
+                validAddress = true;
             }
         }
 
@@ -77,14 +96,14 @@ public class Program
             Console.WriteLine("Set your balance:");
             try
             {
-                var balance = Convert.ToDecimal(Console.ReadLine());
-                if (bankProgram.SetBalance(balance))
+                balance = Convert.ToDecimal(Console.ReadLine());
+                if (accountType == Account.AccountType.Checking && balance >= 10)
                 {
                     validBalance = true;
                 }
                 else
                 {
-                    Console.WriteLine("Error! Balance must be set to $100 or more");
+                    Console.WriteLine("Error! Balance must be set to $10 or more");
                 }
             }
             catch (System.FormatException)
@@ -95,27 +114,27 @@ public class Program
         }
 
         // Validating that the account number upon creation is valid
-        while (validAccountNumber is false)
-        {
-            Console.WriteLine("Enter your account number:");
-            try
-            {
-                var accountNumber = Convert.ToInt32(Console.ReadLine());
-                if (bankProgram.SetAccountNumber(accountNumber))
-                {
-                    validAccountNumber = true;
-                }
-                else
-                {
-                    Console.WriteLine("Error! Account Number must be a positive number!");
-                }
-                
-            }
-            catch (System.FormatException)
-            {
-                Console.WriteLine("Error! Account number must contain only numbers!");
-            }
-        }
+        // while (validAccountNumber is false)
+        // {
+        //     Console.WriteLine("Enter your account number:");
+        //     try
+        //     {
+        //         var accountNumber = Convert.ToInt32(Console.ReadLine());
+        //         if (bankProgram.SetAccountNumber(accountNumber))
+        //         {
+        //             validAccountNumber = true;
+        //         }
+        //         else
+        //         {
+        //             Console.WriteLine("Error! Account Number must be a positive number!");
+        //         }
+        //         
+        //     }
+        //     catch (System.FormatException)
+        //     {
+        //         Console.WriteLine("Error! Account number must contain only numbers!");
+        //     }
+        // }
 
         while (validAccountStatus is false)
         {
@@ -126,7 +145,7 @@ public class Program
             if (!int.TryParse(status, out _) && Enum.TryParse(status, out accountStatus))
             {
                 Console.WriteLine($"Success! Your account status has been set as : {accountStatus}");
-                bankProgram.SetAccountState(accountStatus);
+                // bankProgram.SetAccountState(accountStatus);
                 validAccountStatus = true;
             }
             else
@@ -134,8 +153,10 @@ public class Program
                 Console.WriteLine("Error! The account status must be one of the options given!");
             }
         }
+
+        CheckingAccount bankProgram = new CheckingAccount(name, address, balance, accountStatus);
         
-        Console.WriteLine($"{dashes}\nThank you! Your account has been created :)");
+        Console.WriteLine($"{dashes}\nThank you! Your account has been created :) \nAccount Type: {accountType}");
         Console.WriteLine($"{dashes} \nAccount Details: \nName: {bankProgram.GetName()} \nAddress: {bankProgram.GetAddress()}");
         Console.WriteLine($"Initial balance: {bankProgram.GetBalance()} \nAccount Number: {bankProgram.GetAccountNumber()}");
         Console.WriteLine($"Account Status: {bankProgram.GetAccountState()}");
