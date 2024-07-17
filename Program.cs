@@ -27,8 +27,9 @@ public class Program
         string address = "";
         string status;
         decimal balance = 0;
-        Account.AccountState accountStatus = Account.AccountState.New;
-        Account.AccountType accountType = Account.AccountType.Null;
+        var accountStatus = Account.AccountState.New;
+        var accountType = Account.AccountType.Null;
+        Account bankProgram = null;
 
         // These variables are used for checks in my while loops below.
         var validAccountType = false;
@@ -65,7 +66,7 @@ public class Program
         
         while (validName is false)
         {
-            Console.WriteLine("Enter Your Name:");
+            Console.Write("Enter Your Name: ");
             name = Console.ReadLine();
             if (string.IsNullOrEmpty(name) || int.TryParse(name, out _))
             {
@@ -79,7 +80,7 @@ public class Program
 
         while (validAddress is false)
         {
-            Console.WriteLine("Enter Your Address:");
+            Console.Write("Enter Your Address: ");
             address = Console.ReadLine();
             if (string.IsNullOrEmpty((address)))
             {
@@ -93,11 +94,19 @@ public class Program
 
         while (validBalance is false)
         {
-            Console.WriteLine("Set your balance:");
+            Console.Write("Set your balance: ");
             try
             {
                 balance = Convert.ToDecimal(Console.ReadLine());
                 if (accountType == Account.AccountType.Checking && balance >= 10)
+                {
+                    validBalance = true;
+                }
+                else if (accountType == Account.AccountType.Savings && balance >= 100)
+                {
+                    validBalance = true;
+                }
+                else if (accountType == Account.AccountType.Cd && balance >= 500)
                 {
                     validBalance = true;
                 }
@@ -154,7 +163,21 @@ public class Program
             }
         }
 
-        CheckingAccount bankProgram = new CheckingAccount(name, address, balance, accountStatus);
+        if (accountType == Account.AccountType.Checking)
+        {
+            bankProgram = new CheckingAccount(name, address, balance, accountStatus);   
+        }
+        else if (accountType == Account.AccountType.Savings)
+        {
+            bankProgram = new SavingsAccount(name, address, balance, accountStatus);
+            
+        }
+        else if (accountType == Account.AccountType.Cd)
+        {
+            bankProgram = new CdAccount(name, address, balance, accountStatus);
+        }
+
+        
         
         Console.WriteLine($"{dashes}\nThank you! Your account has been created :) \nAccount Type: {accountType}");
         Console.WriteLine($"{dashes} \nAccount Details: \nName: {bankProgram.GetName()} \nAddress: {bankProgram.GetAddress()}");
@@ -228,6 +251,7 @@ public class Program
                     Console.WriteLine($"{dashes} \nYour balance is ${bankProgram.GetBalance()}");
                     break;
                 case 6:
+                    validWithdrawal = false;
                     while (validWithdrawal is false)
                     {
                         try
@@ -275,6 +299,8 @@ public class Program
                         }
 
                     }
+
+                    validDeposit = false;
                     break;
                     
                 case 8:

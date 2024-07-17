@@ -18,13 +18,12 @@ class CheckingAccount : Account
 
 	public CheckingAccount(string inName, string inAddress, decimal inBalance, AccountState inAccountStatus)
 	{
+		MinBalance = 10;
+		MinServiceFee = 5;
 		SetName(inName);
 		SetAddress(inAddress);
 		SetBalance(inBalance);
 		SetAccountState(inAccountStatus);
-		_serviceFee = 5;
-		MinBalance = 10;
-		MinServiceFee = 5;
 		GenAccountNumber();
 	}
 }

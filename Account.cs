@@ -133,7 +133,7 @@ namespace ConsoleApp1
             _state = inState;
         }
 
-        public virtual bool SetServiceFee(int inServiceFee)
+        public bool SetServiceFee(int inServiceFee)
         {
             if (inServiceFee >= MinServiceFee)
             {
