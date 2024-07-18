@@ -6,7 +6,7 @@ namespace ConsoleApp1
         {
             var randomGen = new Random();
             const string alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            for (int i = 1; i < accountNumberLength; i++)
+            for (int i = 1; i < AccountNumberLength; i++)
             {
                 _accountNumber += alphaNumeric.ElementAt(randomGen.Next(alphaNumeric.Length));
             }
@@ -25,6 +25,7 @@ namespace ConsoleApp1
             SetAccountState(inAccountStatus);
             SetServiceFee(MinServiceFee);
             GenAccountNumber();
+            SetAccountType(AccountType.Cd);
         }
     }
 }

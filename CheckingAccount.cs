@@ -7,7 +7,7 @@ class CheckingAccount : Account
 	{
 		Random randomGen = new Random();
 		const string alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-		for (int i = 1; i < accountNumberLength; i++)
+		for (int i = 1; i < AccountNumberLength; i++)
 		{
 			_accountNumber += alphaNumeric.ElementAt(randomGen.Next(alphaNumeric.Length));
 		}
@@ -25,5 +25,6 @@ class CheckingAccount : Account
 		SetBalance(inBalance);
 		SetAccountState(inAccountStatus);
 		GenAccountNumber();
+		SetAccountType(AccountType.Checking);
 	}
 }

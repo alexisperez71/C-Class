@@ -31,15 +31,16 @@ public class Program
         var accountType = Account.AccountType.Null;
         Account bankProgram = null;
 
-        // These variables are used for checks in my while loops below.
+        // These variables are used as flags for my while loops below.
         var validAccountType = false;
         var validName = false;
         var validAddress = false;
         var validBalance = false;
-        // var validAccountNumber = false;
         var validWithdrawal = false;
         var validDeposit = false;
         var validAccountStatus = false;
+
+        var accountDb = new MultiAccounts();
         
         // Starts the account creation process. The dashes variable is for formatting.
         Console.WriteLine($"{dashes} \nWelcome To My Banking Program \n{dashes}");
@@ -92,6 +93,23 @@ public class Program
             }
         }
 
+        while (validAccountStatus is false)
+        {
+            Console.WriteLine("Enter the state of the account from the options below: ");
+            Console.WriteLine("- New \n- Active \n- Under Audit \n- Frozen \n- Closed");
+            status = Console.ReadLine().Replace(" ", string.Empty);
+
+            if (!int.TryParse(status, out _) && Enum.TryParse(status, out accountStatus))
+            {
+                Console.WriteLine($"Success! Your account status has been set as : {accountStatus}");
+                validAccountStatus = true;
+            }
+            else
+            {
+                Console.WriteLine("Error! The account status must be one of the options given!");
+            }
+        }
+        
         while (validBalance is false)
         {
             Console.Write("Set your balance: ");
@@ -115,7 +133,7 @@ public class Program
                     Console.WriteLine("Error! Balance must be set to $10 or more");
                 }
             }
-            catch (System.FormatException)
+            catch (FormatException)
             {
                 Console.WriteLine("Error! Balance must be an integer!");
             }
@@ -145,48 +163,33 @@ public class Program
         //     }
         // }
 
-        while (validAccountStatus is false)
-        {
-            Console.WriteLine("Enter the state of the account from the options below: ");
-            Console.WriteLine("- New \n- Active \n- Under Audit \n- Frozen \n- Closed");
-            status = Console.ReadLine().Replace(" ", string.Empty);
-
-            if (!int.TryParse(status, out _) && Enum.TryParse(status, out accountStatus))
-            {
-                Console.WriteLine($"Success! Your account status has been set as : {accountStatus}");
-                // bankProgram.SetAccountState(accountStatus);
-                validAccountStatus = true;
-            }
-            else
-            {
-                Console.WriteLine("Error! The account status must be one of the options given!");
-            }
-        }
-
         if (accountType == Account.AccountType.Checking)
         {
-            bankProgram = new CheckingAccount(name, address, balance, accountStatus);   
+            bankProgram = new CheckingAccount(name, address, balance, accountStatus);
+            accountDb.StoreAccount(bankProgram);
         }
         else if (accountType == Account.AccountType.Savings)
         {
             bankProgram = new SavingsAccount(name, address, balance, accountStatus);
+            accountDb.StoreAccount(bankProgram);
             
         }
         else if (accountType == Account.AccountType.Cd)
         {
             bankProgram = new CdAccount(name, address, balance, accountStatus);
+            accountDb.StoreAccount(bankProgram);
         }
 
         
         
-        Console.WriteLine($"{dashes}\nThank you! Your account has been created :) \nAccount Type: {accountType}");
-        Console.WriteLine($"{dashes} \nAccount Details: \nName: {bankProgram.GetName()} \nAddress: {bankProgram.GetAddress()}");
+        Console.WriteLine($"{dashes}\nThank you! Your account has been created :)");
+        Console.WriteLine($"{dashes} \nAccount Details: \nAccount Type: {accountType} \nName: {bankProgram.GetName()} \nAddress: {bankProgram.GetAddress()}");
         Console.WriteLine($"Initial balance: {bankProgram.GetBalance()} \nAccount Number: {bankProgram.GetAccountNumber()}");
         Console.WriteLine($"Account Status: {bankProgram.GetAccountState()}");
 
         do
         {
-            // Prompt for the  console application.
+            // Begin menu for the bank application.
             Console.WriteLine(dashes);
             Console.WriteLine("Welcome To My Banking Program".PadLeft(60));
             
@@ -195,9 +198,12 @@ public class Program
             Console.WriteLine($"Please enter the number that corresponds to the action you would like to complete\n{dashes}");
         
             // Displaying the options
-            Console.WriteLine("Change Account Name: 1 \nDisplay Account Name: 2 \nChange Address: 3 \nDisplay Address: 4");
-            Console.WriteLine("Display Balance: 5 \nWithdraw Funds: 6 \nDeposit Funds: 7 \nDisplay Account Status: 8");
-            Console.WriteLine("Change Account Status: 9 \nQuit: 0");
+            Console.WriteLine("Change Account Name: 1 \nDisplay Account Details: 2 \nChange Address: 3");
+            Console.WriteLine("Withdraw Funds: 4 \nDeposit Funds: 5 \nChange Account Status: 6");
+            Console.WriteLine("Add Account: 7 \nSearch Account: 8  \nQuit: 0");
+            // Console.WriteLine("Change Account Name: 1 \nDisplay Account Name: 2 \nChange Address: 3 \nDisplay Address: 4");
+            // Console.WriteLine("Display Balance: 5 \nWithdraw Funds: 6 \nDeposit Funds: 7 \nDisplay Account Status: 8");
+            // Console.WriteLine("Change Account Status: 9 \nQuit: 0");
             
             // Converting the user selection to an input to work for the switch statement.
             userInput = Convert.ToInt32(Console.ReadLine());
@@ -225,7 +231,11 @@ public class Program
                     }
                     break;
                 case 2:
-                    Console.WriteLine($"{dashes} \nThe name of the account holder is: {bankProgram.GetName()}");
+                    // Console.WriteLine($"{dashes} \nThe name of the account holder is: {bankProgram.GetName()}");
+                    Console.WriteLine($"{dashes} \n{bankProgram.GetName().PadLeft(50)}'s Account Details \n{dashes}");
+                    Console.WriteLine($"Account Type: {bankProgram.GetAccountType()} \nAccount Number: {bankProgram.GetAccountNumber()}");
+                    Console.WriteLine($"Name: {bankProgram.GetName()} \nAddress: {bankProgram.GetAddress()}");
+                    Console.WriteLine($"Balance: {bankProgram.GetBalance()} \nAccount State: {bankProgram.GetAccountState()}");
                     break;
                 case 3:
                     validAddress = false;
@@ -244,13 +254,13 @@ public class Program
                         }
                     }
                     break;
+                // case 4:
+                //     Console.WriteLine($"{dashes} \nYour address is: {bankProgram.GetAddress()}");
+                //     break;
+                // case 5:
+                //     Console.WriteLine($"{dashes} \nYour balance is ${bankProgram.GetBalance()}");
+                //     break;
                 case 4:
-                    Console.WriteLine($"{dashes} \nYour address is: {bankProgram.GetAddress()}");
-                    break;
-                case 5:
-                    Console.WriteLine($"{dashes} \nYour balance is ${bankProgram.GetBalance()}");
-                    break;
-                case 6:
                     validWithdrawal = false;
                     while (validWithdrawal is false)
                     {
@@ -268,14 +278,14 @@ public class Program
                                 Console.WriteLine($"{dashes} \nError! Withdrawal must be a positive number and cannot exceed your current balance!");
                             }
                         }
-                        catch (System.FormatException)
+                        catch (FormatException)
                         {
                             Console.WriteLine($"{dashes} \nError! Withdrawal amount must be a positive number!");
                         }
 
                     }
                     break;
-                case 7:
+                case 5:
                     while (validDeposit is false)
                     {
                         Console.WriteLine($"{dashes} \nEnter your deposit amount: ");
@@ -293,7 +303,7 @@ public class Program
                                 Console.WriteLine($"{dashes} \nDeposit cannot be a negative number!");
                             }
                         }
-                        catch (System.FormatException)
+                        catch (FormatException)
                         {
                             Console.WriteLine($"{dashes} \nError! Deposit amount must be a positive number!");
                         }
@@ -303,11 +313,11 @@ public class Program
                     validDeposit = false;
                     break;
                     
-                case 8:
-                    Console.WriteLine($"{dashes} \nYour account status is: {bankProgram.GetAccountState()}");
-                    break;
+                // case 8:
+                //     Console.WriteLine($"{dashes} \nYour account status is: {bankProgram.GetAccountState()}");
+                //     break;
                 
-                case 9:
+                case 6:
                     validAccountStatus = false;
                     while (validAccountStatus is false)
                     {
@@ -324,6 +334,28 @@ public class Program
                         else
                         {
                             Console.WriteLine($"{dashes} \nError! The account status must be one of the options given!");
+                        }
+                    }
+
+                    break;
+                
+                case 8:
+                    var searchFlag = false;
+                    while (searchFlag is false)
+                    {
+                        Console.Write("Please enter the name of the account you are looking for: ");
+                        var tempAccount = accountDb.FindAccount(Console.ReadLine());
+                        if (tempAccount == null)
+                        {
+                            Console.WriteLine("Error! Account was not found! \nTip: Input is case sensitive!");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{dashes} \n{tempAccount.GetName().PadLeft(50)}'s Account Details \n{dashes}");
+                            Console.WriteLine($"Account Type: {tempAccount.GetAccountType()} \nAccount Number: {tempAccount.GetAccountNumber()}");
+                            Console.WriteLine($"Name: {tempAccount.GetName()} \nAddress: {tempAccount.GetAddress()}");
+                            Console.WriteLine($"Balance: {tempAccount.GetBalance()} \nAccount State: {tempAccount.GetAccountState()}");
+                            searchFlag = true;
                         }
                     }
 

@@ -38,6 +38,11 @@ interface IAccount
     Account.AccountState GetAccountState();
 
     void SetAccountState(Account.AccountState inState);
+
+    public bool SetAccountType(Account.AccountType accountType);
+
+    public Account.AccountType GetAccountType();
+
 }  
 
 

@@ -41,8 +41,8 @@ namespace ConsoleApp1
         protected int MinBalance;
         protected int _serviceFee = 0;
         protected int MinServiceFee = 0;
-        protected const int accountNumberLength = 8;
-        private int _SomeNum;
+        protected const int AccountNumberLength = 8;
+        private AccountType _accountType = AccountType.Null; 
 
         public string GetName()
         {
@@ -51,7 +51,7 @@ namespace ConsoleApp1
 
         public bool SetName(string inName)
         {
-            if (string.IsNullOrEmpty(inName) || int.TryParse(inName, out _SomeNum))
+            if (string.IsNullOrEmpty(inName) || int.TryParse(inName, out _))
             {
                 return false;
             }
@@ -113,7 +113,7 @@ namespace ConsoleApp1
         {
             Random randomGen = new Random();
             const string alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            for (int i = 0; i < accountNumberLength; i++)
+            for (int i = 0; i < AccountNumberLength; i++)
             {
                 _accountNumber += randomGen.Next(alphaNumeric.Length);
             }
@@ -149,6 +149,17 @@ namespace ConsoleApp1
         public int GetServiceFee()
         {
             return _serviceFee;
+        }
+
+        public bool SetAccountType(AccountType accountType)
+        {
+            _accountType = accountType;
+            return true;
+        }
+
+        public AccountType GetAccountType()
+        {
+            return _accountType;
         }
 
     }
