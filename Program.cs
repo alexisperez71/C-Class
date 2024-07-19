@@ -164,7 +164,8 @@ public class Program
                     }
                     else
                     {
-                        Console.WriteLine("Error! Balance must be set to $10 or more");
+                        Console.WriteLine("Error! Balance must be the appropriate amount for the account type you chose");
+                        Console.WriteLine("Checking Min Balance: $10 \nSavings Min Balance: $1000 \nCD Min Balance: $500");
                     }
                 }
                 catch (FormatException)
