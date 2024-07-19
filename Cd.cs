@@ -12,8 +12,9 @@ namespace ConsoleApp1
             }
 
             _accountNumber += "D";
-		
+            CheckForDupeAccountNumber();
         }
+        
 
         public CdAccount(string inName, string inAddress, decimal inBalance, AccountState inAccountStatus)
         {

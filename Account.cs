@@ -10,7 +10,7 @@
 // a zero on this project if I am found in violation of this policy.
 // -----------------------------------------------------------------------
 
-
+using System.Text.RegularExpressions;
 
 namespace ConsoleApp1
 {
@@ -51,7 +51,7 @@ namespace ConsoleApp1
 
         public bool SetName(string inName)
         {
-            if (string.IsNullOrEmpty(inName) || int.TryParse(inName, out _))
+            if (string.IsNullOrEmpty(inName) || int.TryParse(inName, out _) || !Regex.IsMatch(inName, @"^[a-zA-Z0-9- ]*$"))
             {
                 return false;
             }
@@ -67,7 +67,7 @@ namespace ConsoleApp1
 
         public bool SetAddress(string inAddress)
         {
-            if (string.IsNullOrEmpty(inAddress))
+            if (string.IsNullOrEmpty(inAddress) || !Regex.IsMatch(inAddress, @"^[a-zA-Z0-9-.# ]*$"))
             {
                 return false;
             }
@@ -116,6 +116,17 @@ namespace ConsoleApp1
             for (int i = 0; i < AccountNumberLength; i++)
             {
                 _accountNumber += randomGen.Next(alphaNumeric.Length);
+            }
+        }
+
+        public void CheckForDupeAccountNumber()
+        {
+            for (int i = 0; i < MultiAccounts.GetDbSize(); ++i)
+            {
+                if (_accountNumber == MultiAccounts.GetAccountAtIndex(i).GetAccountNumber())
+                {
+                    GenAccountNumber();
+                }
             }
         }
         public string GetAccountNumber()

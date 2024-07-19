@@ -12,7 +12,7 @@ namespace ConsoleApp1
             }
 
             _accountNumber += "S";
-		
+            CheckForDupeAccountNumber();
         }
         
         public SavingsAccount(string inName, string inAddress, decimal inBalance, AccountState inAccountStatus)

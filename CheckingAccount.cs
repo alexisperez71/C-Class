@@ -13,7 +13,7 @@ class CheckingAccount : Account
 		}
 
 		_accountNumber += "C";
-		
+		CheckForDupeAccountNumber();
 	}
 
 	public CheckingAccount(string inName, string inAddress, decimal inBalance, AccountState inAccountStatus)

@@ -28,6 +28,8 @@ interface IAccount
     public bool SetBalance(decimal inBalance);
 
     public void GenAccountNumber();
+
+    public void CheckForDupeAccountNumber();
     
     public string GetAccountNumber();
 
