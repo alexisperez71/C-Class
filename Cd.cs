@@ -36,6 +36,7 @@ namespace ConsoleApp1
             SetAddress(inAddress);
             SetBalance(inBalance);
             SetAccountState(inAccountStatus);
+            SetServiceFee(MinServiceFee);
             GenAccountNumber();
             SetAccountType(AccountType.Cd);
         }

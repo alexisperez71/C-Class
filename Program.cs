@@ -222,7 +222,7 @@ public class Program
             // Displaying the options
             Console.WriteLine("Change Account Name: 1 \nDisplay Account Details: 2 \nChange Address: 3");
             Console.WriteLine("Withdraw Funds: 4 \nDeposit Funds: 5 \nChange Account Status: 6");
-            Console.WriteLine("Add Account: 7 \nSearch Account: 8  \nQuit: 0");
+            Console.WriteLine("Add Account: 7 \nSearch Account: 8 \nChange Service Fee: 9 \nQuit: 0");
 
             
             // Converting the user selection to an input to work for the switch statement.
@@ -234,7 +234,7 @@ public class Program
             catch (FormatException e)
             {
                 Console.WriteLine("Error! You cannot enter a blank option");
-                break;
+                continue;
             }
 
             switch (userInput)
@@ -417,12 +417,13 @@ public class Program
                     var validServiceFee = false;
                     Console.WriteLine($"{dashes} \nThe current service fee for {bankProgram.GetName()} is ${bankProgram.GetServiceFee()}");
                     
-                    // Changes user input to an int, if setservicefee() returns false an error will appear
+                    // Changes user input to an int, if setservicefee returns false an error will appear
                     while (validServiceFee is false)
                     {
                         Console.Write("What will the new service fee be?: $");
                         if (bankProgram.SetServiceFee(int.Parse(Console.ReadLine())))
                         {
+                            Console.WriteLine($"{dashes} \nSuccess! The new service fee for {bankProgram.GetName()} is now ${bankProgram.GetServiceFee()}.");
                             validServiceFee = true;
                         }
                         else
