@@ -12,7 +12,7 @@
 
 namespace ConsoleApp1
 {
-    class MultiAccounts
+    internal class MultiAccounts
     {
         private static List<Account> _accountDb = new List<Account>();
         public bool StoreAccount(Account bankAccount)

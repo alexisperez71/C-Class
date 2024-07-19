@@ -246,7 +246,7 @@ public class Program
                     validName = false;
                     while (validName is false)
                     {
-                        Console.WriteLine($"{dashes} \nEnter the new name of the account:");
+                        Console.Write($"{dashes} \nEnter the new name of the account:");
                         name = Console.ReadLine();
                         if (bankProgram.SetName(name))
                         {
@@ -264,7 +264,8 @@ public class Program
                     Console.WriteLine($"{dashes} \n{bankProgram.GetName().PadLeft(50)}'s Account Details \n{dashes}");
                     Console.WriteLine($"Account Type: {bankProgram.GetAccountType()} \nAccount Number: {bankProgram.GetAccountNumber()}");
                     Console.WriteLine($"Name: {bankProgram.GetName()} \nAddress: {bankProgram.GetAddress()}");
-                    Console.WriteLine($"Balance: {bankProgram.GetBalance()} \nAccount State: {bankProgram.GetAccountState()}");
+                    Console.WriteLine($"Balance: ${bankProgram.GetBalance()} \nAccount State: {bankProgram.GetAccountState()}");
+                    Console.WriteLine($"Service Fee: ${bankProgram.GetServiceFee()}");
                     break;
                 
                 case 3:
@@ -291,7 +292,7 @@ public class Program
                     {
                         try
                         {
-                            Console.WriteLine("How much would you like to withdraw?: $");
+                            Console.Write("How much would you like to withdraw?: $");
                             var withdrawalAmount = Convert.ToDecimal(Console.ReadLine());
                             if (bankProgram.WithdrawFunds(withdrawalAmount))
                             {
@@ -313,7 +314,7 @@ public class Program
                 case 5:
                     while (validDeposit is false)
                     {
-                        Console.WriteLine($"{dashes} \nEnter your deposit amount: $");
+                        Console.Write($"{dashes} \nEnter your deposit amount: $");
                         try
                         {
                             var depositAmount = Convert.ToDecimal(Console.ReadLine());
@@ -411,7 +412,28 @@ public class Program
                     }
 
                     break;
+                    
+                case 9:
+                    var validServiceFee = false;
+                    Console.WriteLine($"{dashes} \nThe current service fee for {bankProgram.GetName()} is ${bankProgram.GetServiceFee()}");
+                    
+                    // Changes user input to an int, if setservicefee() returns false an error will appear
+                    while (validServiceFee is false)
+                    {
+                        Console.Write("What will the new service fee be?: $");
+                        if (bankProgram.SetServiceFee(int.Parse(Console.ReadLine())))
+                        {
+                            validServiceFee = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{dashes} \nError! The service fee must be a number and cannot be less than ${bankProgram.GetMinServiceFee()}");
+                        }
 
+                    }
+
+                    break;
+                    
                 default:
                     Console.WriteLine($"{dashes} \nError! Please only enter a number from the menu!");
                     break;

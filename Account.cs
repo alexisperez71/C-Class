@@ -162,6 +162,11 @@ namespace ConsoleApp1
             return _serviceFee;
         }
 
+        public int GetMinServiceFee()
+        {
+            return MinServiceFee;
+        }
+
         public bool SetAccountType(AccountType accountType)
         {
             _accountType = accountType;

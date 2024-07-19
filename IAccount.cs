@@ -37,6 +37,8 @@ interface IAccount
 
     public int GetServiceFee();
 
+    public int GetMinServiceFee();
+
     Account.AccountState GetAccountState();
 
     void SetAccountState(Account.AccountState inState);
