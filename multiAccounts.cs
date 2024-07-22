@@ -21,11 +21,11 @@ namespace ConsoleApp1
             return true;
         }
 
-        public Account FindAccount(string accountName)
+        public Account? FindAccount(string accountNumber)
         {
             for (int i = 0; i < _accountDb.Count; ++i)
             {
-                if (_accountDb.ElementAt(i).GetName() == accountName)
+                if (_accountDb.ElementAt(i).GetAccountNumber() == accountNumber)
                 {
                     return _accountDb.ElementAt(i);
                 }

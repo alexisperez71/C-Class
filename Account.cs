@@ -33,9 +33,9 @@ namespace ConsoleApp1
             Cd
         }
 
-        private string _name;
-        private string _address;
-        protected string _accountNumber;
+        private string? _name;
+        private string? _address;
+        protected string? _accountNumber;
         private decimal _balance;
         private AccountState _state;
         protected int MinBalance;

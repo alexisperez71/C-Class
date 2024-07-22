@@ -25,13 +25,13 @@ public class Program
         
         // These variables are used to store input from the console
         int userInput = 0;
-        string name = "";
-        string address = "";
-        string status;
+        string? name = "";
+        string? address = "";
+        string? status;
         decimal balance = 0;
         var accountStatus = Account.AccountState.New;
         var accountType = Account.AccountType.Null;
-        Account bankProgram = null;
+        Account? bankProgram = null;
 
         // These variables are used as flags for my while loops below.
         var validName = false;
@@ -50,7 +50,7 @@ public class Program
             
             while (validAccountType is false)
             {
-                string type;
+                string? type;
                 Console.WriteLine("Enter the type of the account from the options below: ");
                 Console.WriteLine("- Checking \n- Savings \n- Cd");
                 Console.Write("Account Type: ");
@@ -164,7 +164,7 @@ public class Program
                     }
                     else
                     {
-                        Console.WriteLine($"{dashes}Error! Balance must be the appropriate amount for the account type you chose");
+                        Console.WriteLine($"{dashes} \nError! Balance must be the appropriate amount for the account type you chose");
                         Console.WriteLine($"Checking Min Balance: $10 \nSavings Min Balance: $1000 \nCD Min Balance: $500 \n{dashes}");
                     }
                 }
@@ -232,7 +232,7 @@ public class Program
                 userInput = Convert.ToInt32(Console.ReadLine());
 
             }
-            catch (FormatException e)
+            catch (FormatException)
             {
                 Console.WriteLine("Error! You cannot enter a blank option");
                 continue;
@@ -363,7 +363,8 @@ public class Program
                     break;
                 
                 case 7:
-                    validAccountStatus = false;
+                    
+                    Account? accountDetails = null;
                     AccountTypePrompt();
                     NamePrompt();
                     AddressPrompt();
@@ -372,19 +373,22 @@ public class Program
 
                     if (accountType == Account.AccountType.Checking)
                     {
-                        accountDb.StoreAccount(new CheckingAccount(name, address, balance, accountStatus));
+                        accountDetails = new CheckingAccount(name, address, balance, accountStatus);
+                        accountDb.StoreAccount(accountDetails);
                     }
                     else if (accountType == Account.AccountType.Savings)
                     {
-                        accountDb.StoreAccount(new SavingsAccount(name, address, balance, accountStatus));
+                        accountDetails = new SavingsAccount(name, address, balance, accountStatus);
+                        accountDb.StoreAccount(accountDetails);
             
                     }
                     else if (accountType == Account.AccountType.Cd)
                     {
-                        accountDb.StoreAccount(new CdAccount(name, address, balance, accountStatus));
+                        accountDetails = new CdAccount(name, address, balance, accountStatus);
+                        accountDb.StoreAccount(accountDetails);
                     }
 
-                    var accountDetails = accountDb.FindAccount(name);
+
                     Console.WriteLine($"{dashes} \n{accountDetails.GetName().PadLeft(50)}'s Account Details \n{dashes}");
                     Console.WriteLine($"Account Type: {accountDetails.GetAccountType()} \nAccount Number: {accountDetails.GetAccountNumber()}");
                     Console.WriteLine($"Name: {accountDetails.GetName()} \nAddress: {accountDetails.GetAddress()}");
@@ -396,7 +400,7 @@ public class Program
                     var searchFlag = false;
                     while (searchFlag is false)
                     {
-                        Console.Write("Please enter the name of the account you are looking for: ");
+                        Console.Write("Please enter the account number of the account you are looking for: ");
                         var tempAccount = accountDb.FindAccount(Console.ReadLine());
                         if (tempAccount == null)
                         {
